@@ -1,8 +1,8 @@
 {
-  "name": "Zen Browser",
-  "vendor": "Zen OSS Team",
-  "appId": "zen",
-  "binaryName": "zen",
+  "name": "NexBrowser",
+  "vendor": "NexBrowser",
+  "appId": "nexbrowser",
+  "binaryName": "nexbrowser",
   "version": {
     "product": "firefox",
     "version": "159.0",
@@ -15,34 +15,17 @@
   "addons": {},
   "brands": {
     "release": {
-      "backgroundColor": "#282A33",
-      "brandShorterName": "Zen",
-      "brandShortName": "Zen",
-      "brandFullName": "Zen Browser",
+      "backgroundColor": "#1A1446",
+      "brandShorterName": "NexBrowser",
+      "brandShortName": "NexBrowser",
+      "brandFullName": "NexBrowser",
       "release": {
-        "displayVersion": "1.24b",
+        "displayVersion": "0.1.0",
         "github": {
-          "repo": "zen-browser/desktop"
+          "repo": "1337om3r/nexbrowser"
         },
         "archives": {
-          "windows": "windows.mar",
-          "macos-aarch64": "macos-aarch64.mar",
-          "linux": "linux.mar",
-          "macos-x64": "macos-x64.mar",
-          "windows-arm64": "windows-arm64.mar",
-          "linux-aarch64": "linux-aarch64.mar"
-        }
-      }
-    },
-    "twilight": {
-      "backgroundColor": "#282A33",
-      "brandShorterName": "Zen",
-      "brandShortName": "Twilight",
-      "brandFullName": "Zen Twilight",
-      "release": {
-        "displayVersion": "1.25t",
-        "github": {
-          "repo": "zen-browser/desktop"
+          "linux": "linux.mar"
         }
       }
     }
@@ -52,6 +35,5 @@
       ".*\\.json"
     ],
     "licenseType": "MPL-2.0"
-  },
-  "updateHostname": "updates.zen-browser.app"
+  }
 }
