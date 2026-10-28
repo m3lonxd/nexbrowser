@@ -51,7 +51,7 @@
   condition: "defined(MOZILLA_OFFICIAL)"
 
 - name: browser.profiles.enabled
-  value: false
+  value: true
 
 - name: browser.tabs.groups.enabled
   value: false
