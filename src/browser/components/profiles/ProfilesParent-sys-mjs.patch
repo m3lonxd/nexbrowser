@@ -1,5 +1,5 @@
 diff --git a/browser/components/profiles/ProfilesParent.sys.mjs b/browser/components/profiles/ProfilesParent.sys.mjs
-index 67bbde85b130c6c1ecfbed24c93378c7899d412a..30fb39e59a7bd6a51ba2088add716d6f2e8d5a17 100644
+index 67bbde85b130c6c1ecfbed24c93378c7899d412a..79f6b21aacc2b47a51dba29068c197679bc8459b 100644
 --- a/browser/components/profiles/ProfilesParent.sys.mjs
 +++ b/browser/components/profiles/ProfilesParent.sys.mjs
 @@ -43,6 +43,7 @@ export class ProfilesParent extends JSWindowActorParent {
@@ -23,16 +23,15 @@ index 67bbde85b130c6c1ecfbed24c93378c7899d412a..30fb39e59a7bd6a51ba2088add716d6f
    async receiveMessage(message) {
      let gBrowser = this.browsingContext.topChromeWindow?.gBrowser;
      let source = this.browsingContext.embedderElement?.currentURI.displaySpec;
-@@ -165,6 +172,15 @@ export class ProfilesParent extends JSWindowActorParent {
+@@ -165,6 +172,14 @@ export class ProfilesParent extends JSWindowActorParent {
            hasDesktopShortcut: profile.hasDesktopShortcut(),
          };
        }
 +      case "Profiles:SetAccountPassword": {
++        // Tarayıcı içi modal pencere; durum ancak pencere kapanınca okunur.
 +        let dialog = message.data?.remove ? "removemp" : "changemp";
-+        this.browsingContext.topChromeWindow?.openDialog(
-+          `chrome://mozapps/content/preferences/${dialog}.xhtml`,
-+          "",
-+          "centerscreen,chrome,modal,titlebar"
++        await this.browsingContext.topChromeWindow?.gDialogBox.open(
++          `chrome://mozapps/content/preferences/${dialog}.xhtml`
 +        );
 +        return { hasAccountPassword: this.#hasAccountPassword() };
 +      }
