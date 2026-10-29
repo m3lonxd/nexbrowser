@@ -55,15 +55,16 @@ jobs:
   windows-build:
     name: Build Windows - ${{ matrix.arch }}
     # aarch64 does not need full 16x, and we also dont use full LTO when generating GPO
-    runs-on: ${{ (inputs.release-branch == 'release' && !inputs.generate-pgo && matrix.arch == 'x86_64') && 'blacksmith-16vcpu-ubuntu-2404' || 'blacksmith-8vcpu-ubuntu-2404' }}
+    runs-on: ubuntu-latest
     env:
       SCCACHE_GHA_ENABLED: ${{ inputs.use-sccache && 'true' || 'false' }}
       CARGO_TERM_COLOR: always
       CARGO_INCREMENTAL: 0
+      ZEN_DISABLE_LTO: 1
     strategy:
       fail-fast: false
       matrix:
-        arch: [x86_64, aarch64]
+        arch: [x86_64]
 
     steps:
       - name: Free Disk Space (Ubuntu)
@@ -76,10 +77,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: recursive
-          token: ${{ secrets.DEPLOY_KEY }}
+          token: ${{ github.token }}
 
       - name: Setup Node.js
-        uses: useblacksmith/setup-node@v5
+        uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
 
@@ -118,7 +119,7 @@ jobs:
         env:
           SEGMENT_DOWNLOAD_TIMEOUT_MINS: 5
         id: cache-win-cross
-        uses: useblacksmith/cache@v5
+        uses: actions/cache@v4
         with:
           path: ${HOME}/win-cross
           key: win-cross
@@ -301,7 +302,7 @@ jobs:
           export ZEN_RELEASE=1
           npm run package
           ls ./dist
-          mv ./dist/zen-$(npm run --silent surfer -- get version | xargs).en-US.win64${{ matrix.arch == 'aarch64' && '-aarch64' || '' }}.zip zen.win64.zip
+          mv ./dist/nexbrowser-*.win64*.zip zen.win64.zip
           ls .
 
       - name: Move package for PGO upload
@@ -315,7 +316,7 @@ jobs:
         run: |
           mv ./zen.win64.zip zen.win-${{ matrix.arch == 'aarch64' && 'arm64' || matrix.arch }}.zip
           mv ./dist/output.mar windows${{ matrix.arch == 'aarch64' && '-arm64' || '' }}.mar
-          mv ./dist/zen.installer.exe ./zen.installer${{ matrix.arch == 'aarch64' && '-arm64' || '' }}.exe
+          mv ./dist/nexbrowser.installer.exe ./zen.installer${{ matrix.arch == 'aarch64' && '-arm64' || '' }}.exe
 
       - name: Upload artifact (PGO)
         uses: actions/upload-artifact@v4
@@ -357,7 +358,7 @@ jobs:
           path: obj-${{ matrix.arch }}-pc-windows-msvc
 
       - name: Upload artifact (if Twilight branch, installer)
-        if: ${{ inputs.release-branch == 'twilight' && !inputs.generate-pgo && inputs.cs-pgo != 'generate' }}
+        if: ${{ !inputs.generate-pgo && inputs.cs-pgo != 'generate' }}
         uses: actions/upload-artifact@v4
         with:
           retention-days: 5
@@ -365,7 +366,7 @@ jobs:
           path: ./zen.installer${{ matrix.arch == 'aarch64' && '-arm64' || '' }}.exe
 
       - name: Upload artifact (if Twilight branch, .mar)
-        if: ${{ inputs.release-branch == 'twilight' && !inputs.generate-pgo && inputs.cs-pgo != 'generate' }}
+        if: ${{ !inputs.generate-pgo && inputs.cs-pgo != 'generate' }}
         uses: actions/upload-artifact@v4
         with:
           retention-days: 5
@@ -373,7 +374,7 @@ jobs:
           path: ./windows${{ matrix.arch == 'aarch64' && '-arm64' || '' }}.mar
 
       - name: Upload artifact (if Twilight branch, update manifests)
-        if: ${{ inputs.release-branch == 'twilight' && !inputs.generate-pgo && inputs.cs-pgo != 'generate' }}
+        if: ${{ !inputs.generate-pgo && inputs.cs-pgo != 'generate' }}
         uses: actions/upload-artifact@v4
         with:
           retention-days: 5

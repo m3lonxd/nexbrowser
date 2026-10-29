@@ -24,7 +24,7 @@ ac_add_options --disable-updater
 # ac_add_options --enable-linker=gold
 
 # Misc
-export MOZ_SOURCE_REPO=https://github.com/1337om3r/nexbrowser
+export MOZ_SOURCE_REPO=https://github.com/m3lonxd/nexbrowser
 export MOZ_SOURCE_CHANGESET=${changeset}
 export MOZ_INCLUDE_SOURCE_INFO=1
 
