@@ -59,6 +59,7 @@ jobs:
       release-branch: release
       MOZ_BUILD_DATE: ""
       use-sccache: false
+      generate-pgo: false
       disable-pgo: true
 
   release:
