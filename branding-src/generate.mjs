@@ -42,7 +42,7 @@ execFileSync('python3', [join(SRC, 'icns.py'), join(OUT, 'firefox.icns'), OUT]);
 
 await png(PRIV, 126, join(OUT, 'PrivateBrowsing_70.png'));
 await png(PRIV, 270, join(OUT, 'PrivateBrowsing_150.png'));
-const tile = { r: 0x1a, g: 0x14, b: 0x46, alpha: 1 };
+const tile = { r: 0x11, g: 0x12, b: 0x14, alpha: 1 };
 await centered(LOGO, 1042, 1046, 620, tile, join(OUT, 'VisualElements_150.png'));
 await centered(LOGO, 1042, 1046, 620, tile, join(OUT, 'VisualElements_70.png'));
 await centered(LOGO, 164, 314, 112, tile, join(tmp, 'wiz.png'));
