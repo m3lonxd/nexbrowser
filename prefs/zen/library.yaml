@@ -2,8 +2,10 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+# NexBrowser: Downloads stays the classic downloads panel in the sidebar foot
+# instead of the Library panel (see ZenUIMigration#restoreDownloadsButton).
 - name: zen.library.enabled
-  value: true
+  value: false
 
 - name: zen.library.last-tab
   value: "history"

@@ -26,6 +26,7 @@ class nsZenUIMigration {
       }
     }
     this.#migrateLibraryButton();
+    this.#restoreDownloadsButton();
     this.clearVariables();
     if (this.shouldRestart) {
       Services.startup.quit(
@@ -85,6 +86,42 @@ class nsZenUIMigration {
         if (standsIn) {
           lazy.CustomizableUI.removeWidgetFromArea("downloads-button");
         }
+      },
+    };
+    lazy.CustomizableUI.addListener(listener);
+  }
+
+  // NexBrowser keeps the Library off; profiles that already swapped the
+  // downloads button for the Library button get it back in the same spot.
+  #restoreDownloadsButton() {
+    const donePref = "nexbrowser.library.restored-downloads-button";
+    if (
+      Services.prefs.getBoolPref("zen.library.enabled", false) ||
+      Services.prefs.getBoolPref(donePref, false)
+    ) {
+      return;
+    }
+    const footButtons = "zen-sidebar-foot-buttons";
+    const listener = {
+      onAreaNodeRegistered: area => {
+        if (area !== footButtons) {
+          return;
+        }
+        lazy.CustomizableUI.removeListener(listener);
+        Services.prefs.setBoolPref(donePref, true);
+        const library =
+          lazy.CustomizableUI.getPlacementOfWidget("zen-library-button");
+        if (library) {
+          lazy.CustomizableUI.removeWidgetFromArea("zen-library-button");
+        }
+        if (lazy.CustomizableUI.getPlacementOfWidget("downloads-button")) {
+          return;
+        }
+        lazy.CustomizableUI.addWidgetToArea(
+          "downloads-button",
+          footButtons,
+          library?.area === footButtons ? library.position : 0
+        );
       },
     };
     lazy.CustomizableUI.addListener(listener);
