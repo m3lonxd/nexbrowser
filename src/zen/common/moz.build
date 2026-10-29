@@ -4,6 +4,7 @@
 
 EXTRA_JS_MODULES += [
     "sys/NexAccountGate.sys.mjs",
+    "sys/NexBranding.sys.mjs",
     "sys/NexMemorySaver.sys.mjs",
     "sys/ZenActorsManager.sys.mjs",
     "sys/ZenCustomizableUI.sys.mjs",

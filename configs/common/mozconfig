@@ -15,6 +15,10 @@ export MOZ_OFFICIAL_BRANDING_DIRECTORY=${brandingDir}
 
 ac_add_options --with-distribution-id=app.nexbrowser
 
+# There is no NexBrowser update server; the inherited updater fetches Zen
+# Browser releases from updates.zen-browser.app.
+ac_add_options --disable-updater
+
 # Uncomment if builds are too resource hungry
 # mk_add_options MOZ_MAKE_FLAGS="-j4"
 # ac_add_options --enable-linker=gold
