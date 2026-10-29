@@ -5,7 +5,7 @@ bir tarayıcıdır. Kaynak kodu Mozilla Public License 2.0 (MPL-2.0) ile lisansl
 
 ## Zen'den farkları
 
-- Ad, logo, ikonlar ve uygulama kimliği NexBrowser (`nexbrowser`), profil klasörü `~/.nexbrowser`.
+- Ad, logo, ikonlar ve uygulama kimliği NexBrowser (`nexbrowser`), profil klasörü `~/.config/nexbrowser` (Zen'in `~/.config/zen` klasörüne dokunmaz). Güncelleyici kapalı; Zen güncelleme sunucusuna bağlanmaz.
 - Otomatik güncelleme ve bağış bağlantıları kapalı.
 - Planlanan: şifreli yerel hesap sistemi (her hesap ayrı Firefox profili).
 
