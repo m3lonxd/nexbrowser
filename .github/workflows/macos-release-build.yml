@@ -193,8 +193,8 @@ jobs:
           if test ${{ inputs.disable-pgo }} = true; then
             export ZEN_GA_DISABLE_PGO=1
           fi
-          if [[ -n ${{ inputs.MOZ_BUILD_DATE }} ]];then
-            export MOZ_BUILD_DATE=${{ inputs.MOZ_BUILD_DATE }}
+          if [[ -n "${{ inputs.MOZ_BUILD_DATE }}" ]]; then
+            export MOZ_BUILD_DATE="${{ inputs.MOZ_BUILD_DATE }}"
           fi
           bash .github/workflows/src/release-build.sh
 
